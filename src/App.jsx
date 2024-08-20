@@ -1,7 +1,7 @@
-import Keyboard from "./components/Keyboard";
+import Container from "./components/Container";
 
 function App() {
-  return <Keyboard />;
+  return <Container />;
 }
 
 export default App;
