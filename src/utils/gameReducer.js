@@ -13,7 +13,7 @@ const initialState = {
 };
 
 const actionTypes = {
-  SET_ANSWER_WORD: "SET_CORRECT_WORD",
+  SET_ANSWER_WORD: "SET_ANSWER_WORD",
   SET_CURRENT_WORD: "SET_CURRENT_WORD",
   SUBMIT_WORD: "SUBMIT_WORD",
 };
