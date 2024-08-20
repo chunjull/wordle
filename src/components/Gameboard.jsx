@@ -7,25 +7,22 @@ function GameBoard() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      console.log("Key pressed: ", event.key);
       if (event.key === "Enter") {
-        console.log("Dispatching SUBMIT_WORD");
+        if (state.currentWord.length === 0) {
+          alert("Not enough letters");
+          return;
+        } else if (state.currentWord.length < 5) {
+          alert("Not enough letters");
+          return;
+        }
         dispatch({ type: actionTypes.SUBMIT_WORD });
       } else if (event.key === "Backspace") {
-        console.log(
-          "Dispatching SET_CURRENT_WORD with payload: ",
-          state.currentWord.slice(0, -1)
-        );
         dispatch({
           type: actionTypes.SET_CURRENT_WORD,
           payload: state.currentWord.slice(0, -1),
         });
       } else if (/^[a-zA-Z]$/.test(event.key)) {
         if (state.currentWord.length < 5) {
-          console.log(
-            "Dispatching SET_CURRENT_WORD with payload: ",
-            state.currentWord + event.key.toUpperCase()
-          );
           dispatch({
             type: actionTypes.SET_CURRENT_WORD,
             payload: state.currentWord + event.key.toUpperCase(),
