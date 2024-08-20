@@ -16,6 +16,15 @@ const actionTypes = {
   SET_ANSWER_WORD: "SET_ANSWER_WORD",
   SET_CURRENT_WORD: "SET_CURRENT_WORD",
   SUBMIT_WORD: "SUBMIT_WORD",
+  RESET_GAME: "RESET_GAME",
+  HANDLE_KEY_DOWN: "HANDLE_KEY_DOWN",
+};
+
+const STATUS = {
+  NONE: 0,
+  WRONG: 1,
+  CORRECT: 2,
+  EXACT: 3,
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -27,22 +36,22 @@ const gameReducer = (state = initialState, action) => {
     case actionTypes.SUBMIT_WORD: {
       const newBoardState = [...state.boardState];
       const newRow = state.currentWord.split("").map((letter, index) => {
-        let status = 0;
+        let status = STATUS.NONE;
         if (letter === state.answerWord[index]) {
-          status = 3;
+          status = STATUS.EXACT;
         } else if (state.answerWord.includes(letter)) {
-          status = 2;
+          status = STATUS.CORRECT;
         } else if (!state.answerWord.includes(letter)) {
-          status = 1;
+          status = STATUS.WRONG;
         }
         return { letter, status };
       });
       newBoardState[state.currentRow] = newRow;
       let newGameStatus = state.gameStatus;
       if (state.currentWord === state.answerWord) {
-        newGameStatus = 1; // win
+        newGameStatus = 1;
       } else if (state.currentRow >= 5) {
-        newGameStatus = 2; // lose
+        newGameStatus = 2;
       }
       return {
         ...state,
@@ -52,9 +61,37 @@ const gameReducer = (state = initialState, action) => {
         gameStatus: newGameStatus,
       };
     }
+    case actionTypes.RESET_GAME:
+      return initialState;
+    case actionTypes.HANDLE_KEY_DOWN: {
+      const { key } = action.payload;
+      if (key === "Enter") {
+        if (state.currentWord.length === 0) {
+          alert("Not enough letters");
+          return state;
+        } else if (state.currentWord.length < 5) {
+          alert("Not enough letters");
+          return state;
+        }
+        return gameReducer(state, { type: actionTypes.SUBMIT_WORD });
+      } else if (key === "Backspace") {
+        return gameReducer(state, {
+          type: actionTypes.SET_CURRENT_WORD,
+          payload: state.currentWord.slice(0, -1),
+        });
+      } else if (/^[a-zA-Z]$/.test(key)) {
+        if (state.currentWord.length < 5) {
+          return gameReducer(state, {
+            type: actionTypes.SET_CURRENT_WORD,
+            payload: state.currentWord + key.toUpperCase(),
+          });
+        }
+      }
+      return state;
+    }
     default:
       throw new Error("Unknown action type");
   }
 };
 
-export { initialState, actionTypes, gameReducer };
+export { initialState, actionTypes, gameReducer, STATUS };

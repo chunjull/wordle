@@ -1,7 +1,7 @@
-import Container from "./components/Container";
+import Wordle from "./components/Wordle";
 
 function App() {
-  return <Container />;
+  return <Wordle />;
 }
 
 export default App;
