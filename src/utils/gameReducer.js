@@ -31,8 +31,10 @@ const gameReducer = (state = initialState, action) => {
       const newRow = state.currentWord.split("").map((letter, index) => {
         let status = 0;
         if (letter === state.answerWord[index]) {
-          status = 2;
+          status = 3;
         } else if (state.answerWord.includes(letter)) {
+          status = 2;
+        } else if (!state.answerWord.includes(letter)) {
           status = 1;
         }
         return { letter, status };
