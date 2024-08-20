@@ -6,14 +6,14 @@ function Row({ row, currentWord, currentRow, rowIndex }) {
       {row.map((square, index) => (
         <div
           key={index}
-          className={`w-14 h-14 border-2 font-mono text-center text-3xl leading-relaxed ${
+          className={`w-14 h-14 border-2 border-slate-400 font-mono text-center text-3xl leading-relaxed ${
             square.status === 1
-              ? "bg-slate-200 border-slate-400"
+              ? "bg-slate-200"
               : square.status === 2
-              ? "bg-yellow-200 border-slate-400"
+              ? "bg-yellow-200"
               : square.status === 3
-              ? "bg-green-200 border-slate-400"
-              : "bg-white border-slate-400"
+              ? "bg-green-200"
+              : "bg-white"
           }`}
         >
           {rowIndex === currentRow ? currentWord[index] || "" : square.letter}
