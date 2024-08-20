@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useRef } from "react";
 import Row from "./Row";
 import {
   initialState,
@@ -9,13 +9,20 @@ import {
 
 function GameBoard() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  const stateRef = useRef(state);
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      dispatch({
-        type: actionTypes.HANDLE_KEY_DOWN,
-        payload: { key: event.key },
-      });
+      if (stateRef.current.gameStatus === 0) {
+        dispatch({
+          type: actionTypes.HANDLE_KEY_DOWN,
+          payload: { key: event.key },
+        });
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);

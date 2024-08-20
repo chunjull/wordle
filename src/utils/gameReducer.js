@@ -16,6 +16,7 @@ const actionTypes = {
   SET_ANSWER_WORD: "SET_ANSWER_WORD",
   SET_CURRENT_WORD: "SET_CURRENT_WORD",
   SUBMIT_WORD: "SUBMIT_WORD",
+  SET_GAME_STATUS: "SET_GAME_STATUS",
   RESET_GAME: "RESET_GAME",
   HANDLE_KEY_DOWN: "HANDLE_KEY_DOWN",
 };
@@ -61,9 +62,14 @@ const gameReducer = (state = initialState, action) => {
         gameStatus: newGameStatus,
       };
     }
+    case actionTypes.SET_GAME_STATUS:
+      return { ...state, gameStatus: action.payload };
     case actionTypes.RESET_GAME:
       return initialState;
     case actionTypes.HANDLE_KEY_DOWN: {
+      if (state.gameStatus !== 0) {
+        return state;
+      }
       const { key } = action.payload;
       if (key === "Enter") {
         if (state.currentWord.length === 0) {
