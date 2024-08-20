@@ -16,8 +16,6 @@ const actionTypes = {
   SET_ANSWER_WORD: "SET_CORRECT_WORD",
   SET_CURRENT_WORD: "SET_CURRENT_WORD",
   SUBMIT_WORD: "SUBMIT_WORD",
-  SET_GAME_STATUS: "SET_GAME_STATUS",
-  RESET_GAME: "RESET_GAME",
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -54,10 +52,6 @@ const gameReducer = (state = initialState, action) => {
         gameStatus: newGameStatus,
       };
     }
-    case actionTypes.SET_GAME_STATUS:
-      return { ...state, gameStatus: action.payload };
-    case actionTypes.RESET_GAME:
-      return initialState;
     default:
       throw new Error("Unknown action type");
   }
