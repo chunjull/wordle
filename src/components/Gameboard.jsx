@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Row from "./Row";
-import { actionTypes, STATUS } from "../utils/gameReducer";
+import { actionTypes, STATUS, GAME_STATUS } from "../utils/gameReducer";
 import PropTypes from "prop-types";
 
 function GameBoard({ state, dispatch }) {
@@ -12,7 +12,7 @@ function GameBoard({ state, dispatch }) {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (stateRef.current.gameStatus === 0) {
+      if (stateRef.current.gameStatus === GAME_STATUS.PLAYING) {
         dispatch({
           type: actionTypes.HANDLE_KEY_DOWN,
           payload: { key: event.key },
