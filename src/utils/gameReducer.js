@@ -1,5 +1,8 @@
+import db from "./FirebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+
 const initialState = {
-  answerWord: "INDEX", // 字串
+  answerWord: "", // 字串
   currentWord: "", // 字串
   boardState: Array(6)
     .fill()
@@ -32,6 +35,12 @@ const GAME_STATUS = {
   PLAYING: 0,
   WIN: 1,
   LOSE: 2,
+};
+
+const fetchAnswerWord = async () => {
+  const querySnapshot = await getDocs(collection(db, "wordle"));
+  const fireDoc = querySnapshot.docs[0];
+  return fireDoc ? fireDoc.data().answerWords : [];
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -71,7 +80,10 @@ const gameReducer = (state = initialState, action) => {
     case actionTypes.SET_GAME_STATUS:
       return { ...state, gameStatus: action.payload };
     case actionTypes.RESET_GAME:
-      return initialState;
+      return {
+        ...initialState,
+        answerWord: action.payload,
+      };
     case actionTypes.HANDLE_KEY_DOWN: {
       if (state.gameStatus !== GAME_STATUS.PLAYING) {
         return state;
@@ -106,4 +118,17 @@ const gameReducer = (state = initialState, action) => {
   }
 };
 
-export { initialState, actionTypes, gameReducer, STATUS, GAME_STATUS };
+const initializeGame = async (dispatch) => {
+  const words = await fetchAnswerWord();
+  const answerWord = words[Math.floor(Math.random() * words.length)];
+  dispatch({ type: actionTypes.RESET_GAME, payload: answerWord });
+};
+
+export {
+  initialState,
+  actionTypes,
+  gameReducer,
+  STATUS,
+  GAME_STATUS,
+  initializeGame,
+};

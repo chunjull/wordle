@@ -1,9 +1,9 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import {
   initialState,
-  actionTypes,
   gameReducer,
   GAME_STATUS,
+  initializeGame,
 } from "../utils/gameReducer";
 import GameBoard from "./Gameboard";
 import Modal from "./Modal";
@@ -11,8 +11,12 @@ import Modal from "./Modal";
 function Wordle() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
+  useEffect(() => {
+    initializeGame(dispatch);
+  }, []);
+
   const handleRestart = () => {
-    dispatch({ type: actionTypes.RESET_GAME });
+    initializeGame(dispatch);
   };
 
   let message = "";
