@@ -15,13 +15,6 @@ function Wordle() {
     dispatch({ type: actionTypes.RESET_GAME });
   };
 
-  const handleClose = () => {
-    dispatch({
-      type: actionTypes.SET_GAME_STATUS,
-      payload: GAME_STATUS.PLAYING,
-    });
-  };
-
   let message = "";
   if (state.gameStatus === GAME_STATUS.WIN) {
     message = "You win!";
@@ -38,11 +31,7 @@ function Wordle() {
         <GameBoard state={state} dispatch={dispatch} />
       </div>
       {state.gameStatus !== GAME_STATUS.PLAYING && (
-        <Modal
-          onClose={handleClose}
-          onRestart={handleRestart}
-          message={message}
-        />
+        <Modal onRestart={handleRestart} message={message} />
       )}
     </div>
   );

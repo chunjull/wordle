@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import PropTypes from "prop-types";
 
-function Modal({ onClose, onRestart, message }) {
+function Modal({ onRestart, message }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-5/12 bg-white p-5 rounded-lg">
@@ -9,7 +9,7 @@ function Modal({ onClose, onRestart, message }) {
           <h1 className="font-bold font-mono">Wordle</h1>
           <IoClose
             className="hover:text-red-600 hover:cursor-pointer"
-            onClick={onClose}
+            onClick={onRestart}
           />
         </div>
         <div className="mt-4">
