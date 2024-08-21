@@ -1,5 +1,10 @@
 import { useReducer } from "react";
-import { initialState, actionTypes, gameReducer } from "../utils/gameReducer";
+import {
+  initialState,
+  actionTypes,
+  gameReducer,
+  GAME_STATUS,
+} from "../utils/gameReducer";
 import GameBoard from "./Gameboard";
 import Modal from "./Modal";
 
@@ -15,9 +20,9 @@ function Wordle() {
   };
 
   let message = "";
-  if (state.gameStatus === 1) {
+  if (state.gameStatus === GAME_STATUS.WIN) {
     message = "You win!";
-  } else if (state.gameStatus === 2) {
+  } else if (state.gameStatus === GAME_STATUS.LOSE) {
     message = "You lose!";
   }
 

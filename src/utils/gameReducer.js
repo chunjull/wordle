@@ -28,6 +28,12 @@ const STATUS = {
   EXACT: 3,
 };
 
+const GAME_STATUS = {
+  PLAYING: 0,
+  WIN: 1,
+  LOSE: 2,
+};
+
 const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_ANSWER_WORD:
@@ -67,7 +73,7 @@ const gameReducer = (state = initialState, action) => {
     case actionTypes.RESET_GAME:
       return initialState;
     case actionTypes.HANDLE_KEY_DOWN: {
-      if (state.gameStatus !== 0) {
+      if (state.gameStatus !== GAME_STATUS.PLAYING) {
         return state;
       }
       const { key } = action.payload;
@@ -100,4 +106,4 @@ const gameReducer = (state = initialState, action) => {
   }
 };
 
-export { initialState, actionTypes, gameReducer, STATUS };
+export { initialState, actionTypes, gameReducer, STATUS, GAME_STATUS };
