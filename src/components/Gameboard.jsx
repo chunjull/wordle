@@ -1,14 +1,9 @@
-import { useReducer, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Row from "./Row";
-import {
-  initialState,
-  actionTypes,
-  gameReducer,
-  STATUS,
-} from "../utils/gameReducer";
+import { actionTypes, STATUS } from "../utils/gameReducer";
+import PropTypes from "prop-types";
 
-function GameBoard() {
-  const [state, dispatch] = useReducer(gameReducer, initialState);
+function GameBoard({ state, dispatch }) {
   const stateRef = useRef(state);
 
   useEffect(() => {
@@ -29,7 +24,7 @@ function GameBoard() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col space-y-2">
@@ -46,5 +41,15 @@ function GameBoard() {
     </div>
   );
 }
+
+GameBoard.propTypes = {
+  state: PropTypes.shape({
+    boardState: PropTypes.arrayOf(PropTypes.array).isRequired,
+    currentWord: PropTypes.string.isRequired,
+    currentRow: PropTypes.number.isRequired,
+    gameStatus: PropTypes.number.isRequired,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default GameBoard;

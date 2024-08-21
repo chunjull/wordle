@@ -1,5 +1,5 @@
 const initialState = {
-  answerWord: "REACT", // 字串
+  answerWord: "INDEX", // 字串
   currentWord: "", // 字串
   boardState: Array(6)
     .fill()
