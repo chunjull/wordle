@@ -27,7 +27,6 @@ function Modal({ onRestart, message }) {
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
   onRestart: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
 };
