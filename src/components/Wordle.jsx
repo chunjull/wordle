@@ -32,6 +32,12 @@ function Wordle() {
   };
   let message = messages[state.gameStatus] || "";
 
+  const texts = {
+    [GAME_STATUS.WIN]: "Restart",
+    [GAME_STATUS.LOSE]: "Try Again",
+  };
+  let buttonText = texts[state.gameStatus] || "";
+
   return (
     <div className="bg-gray-200 py-20 h-screen">
       <div className="">
@@ -45,6 +51,7 @@ function Wordle() {
           onClickCloseButton={handleRestart}
           onClickMainButton={handleRestart}
           message={message}
+          buttonText={buttonText}
         />
       )}
     </div>
