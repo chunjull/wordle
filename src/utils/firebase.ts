@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: (import.meta as any).env.VITE_FIREBASE_API_KEY,
   authDomain: "wordle-3732d.firebaseapp.com",
   projectId: "wordle-3732d",
   storageBucket: "wordle-3732d.appspot.com",
