@@ -1,6 +1,3 @@
-import db from "./FirebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-
 const initialState = {
   answerWord: "", // 字串
   currentWord: "", // 字串
@@ -35,12 +32,6 @@ const GAME_STATUS = {
   PLAYING: 0,
   WIN: 1,
   LOSE: 2,
-};
-
-const fetchAnswerWord = async () => {
-  const querySnapshot = await getDocs(collection(db, "wordle"));
-  const fireDoc = querySnapshot.docs[0];
-  return fireDoc ? fireDoc.data().answerWords : [];
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -118,17 +109,4 @@ const gameReducer = (state = initialState, action) => {
   }
 };
 
-const initializeGame = async (dispatch) => {
-  const words = await fetchAnswerWord();
-  const answerWord = words[Math.floor(Math.random() * words.length)];
-  dispatch({ type: actionTypes.RESET_GAME, payload: answerWord });
-};
-
-export {
-  initialState,
-  actionTypes,
-  gameReducer,
-  STATUS,
-  GAME_STATUS,
-  initializeGame,
-};
+export { initialState, actionTypes, gameReducer, STATUS, GAME_STATUS };

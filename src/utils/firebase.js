@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,4 +14,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const fetchAnswerWord = async () => {
+  const querySnapshot = await getDocs(collection(db, "wordle"));
+  const fireDoc = querySnapshot.docs[0];
+  return fireDoc ? fireDoc.data().answerWords : [];
+};
+
 export default db;
+
+export { fetchAnswerWord };
